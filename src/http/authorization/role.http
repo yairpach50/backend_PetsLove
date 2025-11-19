@@ -1,0 +1,38 @@
+### role.http
+
+@baseUrl = http://localhost:4000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTA5NzYwLCJleHAiOjE3NjE1MTAzNjB9.Tct8Mjc4tmPRDcTuAhCeXkvi6FgwzTVE8aDI4Ny89Mk
+
+### ================== RUTAS SIN AUTENTICACIÓN ==================
+
+### Obtener todos los roles
+GET {{baseUrl}}/api/roles/public
+
+### Obtener rol por ID
+GET {{baseUrl}}/api/roles/public/1
+
+### Crear un nuevo rol
+POST {{baseUrl}}/api/roles/public
+Content-Type: application/json
+
+{
+  "name": "Administrator",
+  "is_active": "ACTIVE"
+}
+
+### Actualizar un rol
+PATCH {{baseUrl}}/api/roles/public/1
+Content-Type: application/json
+
+{
+  "name": "Super Administrator",
+  "is_active": "ACTIVE"
+}
+
+### Eliminar un rol físicamente
+DELETE {{baseUrl}}/api/roles/public/1
+
+### Eliminar un rol lógicamente
+DELETE {{baseUrl}}/api/roles/public/1/logic
+
+### ================== RUTAS CON AUTENTICACIÓN ==================

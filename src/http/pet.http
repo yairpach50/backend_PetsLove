@@ -1,0 +1,88 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTc2MDA2MDU1NywiZXhwIjoxNzYwMDYxMTU3fQ.l9kxHGraKffDkcOLHMmaVa12iOQKdrhZHrNnP6wb6dA
+@baseUrl = http://localhost:4000
+
+### ================== RUTAS SIN AUTENTICACIÓN ==================
+
+### Obtener todas las mascotas (SIN token)
+GET {{baseUrl}}/api/pets/public
+
+### Obtener mascota por ID (SIN token)
+GET {{baseUrl}}/api/pets/public/1
+
+### Crear una nueva mascota (SIN token)
+POST {{baseUrl}}/api/pets/public
+Content-Type: application/json
+
+{
+  "name": "Firulais",
+  "birth_date": "2021-05-10",
+  "type": "Perro",
+  "color": "Marrón",
+  "owner_id": 10,
+  "status": "ACTIVE"
+}
+
+### Actualizar una mascota (SIN token)
+PATCH {{baseUrl}}/api/pets/public/1
+Content-Type: application/json
+
+{
+  "name": "Firulais Actualizado",
+  "birth_date": "2021-05-10",
+  "type": "Perro",
+  "color": "Negro",
+  "owner_id": 1,
+  "status": "ACTIVE"
+}
+
+### Eliminar una mascota físicamente (SIN token)
+DELETE {{baseUrl}}/api/pets/public/1
+
+### Desactivar una mascota (eliminación lógica)
+PATCH {{baseUrl}}/api/pets/public/2/deactivate
+
+### ================== RUTAS CON AUTENTICACIÓN ==================
+
+### Obtener todas las mascotas (CON token)
+GET {{baseUrl}}/api/pets
+Authorization: Bearer {{token}}
+
+### Obtener mascota por ID (CON token)
+GET {{baseUrl}}/api/pets/1
+Authorization: Bearer {{token}}
+
+### Crear una nueva mascota (CON token)
+POST {{baseUrl}}/api/pets
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Michi",
+  "birth_date": "2022-01-15",
+  "type": "Gato",
+  "color": "Blanco",
+  "owner_id": 2,
+  "status": "ACTIVE"
+}
+
+### Actualizar una mascota (CON token)
+PATCH {{baseUrl}}/api/pets/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Michi Actualizado",
+  "birth_date": "2022-01-15",
+  "type": "Gato",
+  "color": "Gris",
+  "owner_id": 2,
+  "status": "ACTIVE"
+}
+
+### Eliminar una mascota físicamente (CON token)
+DELETE {{baseUrl}}/api/pets/1
+Authorization: Bearer {{token}}
+
+### Desactivar una mascota (CON token)
+PATCH {{baseUrl}}/api/pets/1/deactivate
+Authorization: Bearer {{token}}

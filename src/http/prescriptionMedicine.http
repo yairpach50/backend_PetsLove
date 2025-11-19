@@ -1,0 +1,73 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTc2MDA2MDU1NywiZXhwIjoxNzYwMDYxMTU3fQ.l9kxHGraKffDkcOLHMmaVa12iOQKdrhZHrNnP6wb6dA
+@baseUrl = http://localhost:4000
+
+### ================== RUTAS SIN AUTENTICACIÓN ==================
+
+### Obtener todos los prescription medicines (SIN token)
+GET {{baseUrl}}/api/prescription-medicines/public
+
+### Obtener prescription medicine por ID (SIN token)
+GET {{baseUrl}}/api/prescription-medicines/public/1
+
+### Crear un nuevo prescription medicine (SIN token)
+POST {{baseUrl}}/api/prescription-medicines/public
+Content-Type: application/json
+
+{
+  "prescription_id": 1,
+  "medicine_id": 2,
+  "dosage": "2 tablets",
+  "duration": "7 days",
+  "instructions": "Take after meals"
+}
+
+### Actualizar un prescription medicine (SIN token)
+PATCH {{baseUrl}}/api/prescription-medicines/public/1
+Content-Type: application/json
+
+{
+  "dosage": "1 tablet",
+  "duration": "5 days",
+  "instructions": "Take before meals"
+}
+
+### Eliminar un prescription medicine (SIN token)
+DELETE {{baseUrl}}/api/prescription-medicines/public/1
+
+### ================== RUTAS CON AUTENTICACIÓN ==================
+
+### Obtener todos los prescription medicines (CON token)
+GET {{baseUrl}}/api/prescription-medicines
+Authorization: Bearer {{token}}
+
+### Obtener prescription medicine por ID (CON token)
+GET {{baseUrl}}/api/prescription-medicines/1
+Authorization: Bearer {{token}}
+
+### Crear un nuevo prescription medicine (CON token)
+POST {{baseUrl}}/api/prescription-medicines
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "prescription_id": 2,
+  "medicine_id": 3,
+  "dosage": "1 capsule",
+  "duration": "10 days",
+  "instructions": "Take with water"
+}
+
+### Actualizar un prescription medicine (CON token)
+PATCH {{baseUrl}}/api/prescription-medicines/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "dosage": "2 capsules",
+  "duration": "14 days",
+  "instructions": "Take with food"
+}
+
+### Eliminar un prescription medicine (CON token)
+DELETE {{baseUrl}}/api/prescription-medicines/1
+Authorization: Bearer {{token}}

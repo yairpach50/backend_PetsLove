@@ -1,0 +1,84 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTc2MDA2MDU1NywiZXhwIjoxNzYwMDYxMTU3fQ.l9kxHGraKffDkcOLHMmaVa12iOQKdrhZHrNnP6wb6dA
+@baseUrl = http://localhost:4000
+
+### ================== RUTAS SIN AUTENTICACIÓN ==================
+
+### Obtener todos los medicamentos (SIN token)
+GET {{baseUrl}}/api/medicines/public
+
+### Obtener medicamento por ID (SIN token)
+GET {{baseUrl}}/api/medicines/public/1
+
+### Crear un nuevo medicamento (SIN token)
+POST {{baseUrl}}/api/medicines/public
+Content-Type: application/json
+
+{
+  "name": "Paracetamol",
+  "description": "Analgesico y antipirético",
+  "stock": 100,
+  "price": 5000,
+  "status": "ACTIVE"
+}
+
+### Actualizar un medicamento (SIN token)
+PATCH {{baseUrl}}/api/medicines/public/1
+Content-Type: application/json
+
+{
+  "name": "Paracetamol 500mg",
+  "description": "Analgesico y antipirético actualizado",
+  "stock": 150,
+  "price": 5500,
+  "status": "ACTIVE"
+}
+
+### Eliminar un medicamento físicamente (SIN token)
+DELETE {{baseUrl}}/api/medicines/public/1
+
+### Desactivar un medicamento (SIN token)
+PATCH {{baseUrl}}/api/medicines/public/1/deactivate
+
+### ================== RUTAS CON AUTENTICACIÓN ==================
+
+### Obtener todos los medicamentos (CON token)
+GET {{baseUrl}}/api/medicines
+Authorization: Bearer {{token}}
+
+### Obtener medicamento por ID (CON token)
+GET {{baseUrl}}/api/medicines/1
+Authorization: Bearer {{token}}
+
+### Crear un nuevo medicamento (CON token)
+POST {{baseUrl}}/api/medicines
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Ibuprofeno",
+  "description": "Anti-inflamatorio",
+  "stock": 200,
+  "price": 8000,
+  "status": "ACTIVE"
+}
+
+### Actualizar un medicamento (CON token)
+PATCH {{baseUrl}}/api/medicines/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Ibuprofeno 400mg",
+  "description": "Anti-inflamatorio actualizado",
+  "stock": 250,
+  "price": 8500,
+  "status": "ACTIVE"
+}
+
+### Eliminar un medicamento físicamente (CON token)
+DELETE {{baseUrl}}/api/medicines/1
+Authorization: Bearer {{token}}
+
+### Desactivar un medicamento (CON token)
+PATCH {{baseUrl}}/api/medicines/1/deactivate
+Authorization: Bearer {{token}}

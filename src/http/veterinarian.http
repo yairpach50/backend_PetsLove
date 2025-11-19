@@ -1,0 +1,84 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTc2MDA2MDU1NywiZXhwIjoxNzYwMDYxMTU3fQ.l9kxHGraKffDkcOLHMmaVa12iOQKdrhZHrNnP6wb6dA
+@baseUrl = http://localhost:4000
+
+### ================== RUTAS SIN AUTENTICACIÓN ==================
+
+### Obtener todos los veterinarios (SIN token)
+GET {{baseUrl}}/api/veterinarians/public
+
+### Obtener veterinario por ID (SIN token)
+GET {{baseUrl}}/api/veterinarians/public/1
+
+### Crear un nuevo veterinario (SIN token)
+POST {{baseUrl}}/api/veterinarians/public
+Content-Type: application/json
+
+{
+  "name": "Dr. Juan Pérez",
+  "specialty": "Canine",
+  "phone": "3001234567",
+  "email": "juan.perez@example.com",
+  "status": "ACTIVE"
+}
+
+### Actualizar un veterinario (SIN token)
+PATCH {{baseUrl}}/api/veterinarians/public/1
+Content-Type: application/json
+
+{
+  "name": "Dr. Juan Pérez Actualizado",
+  "specialty": "Feline",
+  "phone": "3007654321",
+  "email": "juan.perez.updated@example.com",
+  "status": "ACTIVE"
+}
+
+### Eliminar un veterinario físicamente (SIN token)
+DELETE {{baseUrl}}/api/veterinarians/public/1
+
+### Desactivar un veterinario (SIN token)
+PATCH {{baseUrl}}/api/veterinarians/public/2/deactivate
+
+### ================== RUTAS CON AUTENTICACIÓN ==================
+
+### Obtener todos los veterinarios (CON token)
+GET {{baseUrl}}/api/veterinarians
+Authorization: Bearer {{token}}
+
+### Obtener veterinario por ID (CON token)
+GET {{baseUrl}}/api/veterinarians/1
+Authorization: Bearer {{token}}
+
+### Crear un nuevo veterinario (CON token)
+POST {{baseUrl}}/api/veterinarians
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Dra. María Gómez",
+  "specialty": "Exotic Animals",
+  "phone": "3009876543",
+  "email": "maria.gomez@example.com",
+  "status": "ACTIVE"
+}
+
+### Actualizar un veterinario (CON token)
+PATCH {{baseUrl}}/api/veterinarians/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Dra. María Gómez Actualizada",
+  "specialty": "Avian",
+  "phone": "3001239876",
+  "email": "maria.gomez.updated@example.com",
+  "status": "ACTIVE"
+}
+
+### Eliminar un veterinario físicamente (CON token)
+DELETE {{baseUrl}}/api/veterinarians/1
+Authorization: Bearer {{token}}
+
+### Desactivar un veterinario (CON token)
+PATCH {{baseUrl}}/api/veterinarians/1/deactivate
+Authorization: Bearer {{token}}

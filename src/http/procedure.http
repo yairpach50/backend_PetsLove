@@ -1,0 +1,88 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTc2MDA2MDU1NywiZXhwIjoxNzYwMDYxMTU3fQ.l9kxHGraKffDkcOLHMmaVa12iOQKdrhZHrNnP6wb6dA
+@baseUrl = http://localhost:4000
+
+### ================== RUTAS SIN AUTENTICACIÓN ==================
+
+### Obtener todos los procedimientos (SIN token)
+GET {{baseUrl}}/api/procedures/public
+
+### Obtener procedimiento por ID (SIN token)
+GET {{baseUrl}}/api/procedures/public/1
+
+### Crear un nuevo procedimiento (SIN token)
+POST {{baseUrl}}/api/procedures/public
+Content-Type: application/json
+
+{
+  "pet_id": 3,
+  "appointment_id": 6,
+  "name": "Vacuna Antirrábica",
+  "description": "Aplicación de vacuna antirrábica a la mascota",
+  "date": "2025-10-25T10:00:00.000Z",
+  "status": "ACTIVE"
+}
+
+### Actualizar un procedimiento (SIN token)
+PATCH {{baseUrl}}/api/procedures/public/1
+Content-Type: application/json
+
+{
+  "pet_id": 1,
+  "appointment_id": 1,
+  "name": "Vacuna Antirrábica Actualizada",
+  "description": "Aplicación actualizada de vacuna antirrábica",
+  "date": "2025-10-26T10:00:00.000Z",
+  "status": "ACTIVE"
+}
+
+### Eliminar un procedimiento físicamente (SIN token)
+DELETE {{baseUrl}}/api/procedures/public/1
+
+### Desactivar un procedimiento (SIN token)
+PATCH {{baseUrl}}/api/procedures/public/2/deactivate
+
+### ================== RUTAS CON AUTENTICACIÓN ==================
+
+### Obtener todos los procedimientos (CON token)
+GET {{baseUrl}}/api/procedures
+Authorization: Bearer {{token}}
+
+### Obtener procedimiento por ID (CON token)
+GET {{baseUrl}}/api/procedures/1
+Authorization: Bearer {{token}}
+
+### Crear un nuevo procedimiento (CON token)
+POST {{baseUrl}}/api/procedures
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "pet_id": 2,
+  "appointment_id": 2,
+  "name": "Desparasitación",
+  "description": "Desparasitación general de la mascota",
+  "date": "2025-10-27T11:00:00.000Z",
+  "status": "ACTIVE"
+}
+
+### Actualizar un procedimiento (CON token)
+PATCH {{baseUrl}}/api/procedures/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "pet_id": 2,
+  "appointment_id": 2,
+  "name": "Desparasitación Actualizada",
+  "description": "Desparasitación general actualizada",
+  "date": "2025-10-28T11:00:00.000Z",
+  "status": "ACTIVE"
+}
+
+### Eliminar un procedimiento físicamente (CON token)
+DELETE {{baseUrl}}/api/procedures/1
+Authorization: Bearer {{token}}
+
+### Desactivar un procedimiento (CON token)
+PATCH {{baseUrl}}/api/procedures/public/1/deactivate
+Authorization: Bearer {{token}}

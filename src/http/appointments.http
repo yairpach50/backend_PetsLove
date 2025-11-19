@@ -1,0 +1,84 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzYxODYzMDAzLCJleHAiOjE3NjE4NzAyMDN9.JgVJC7ghFNc9nyHN4NPXJJuxq8hkwgxXWaN7VVwjN8U
+@baseUrl = http://localhost:4000
+
+### ================== RUTAS SIN AUTENTICACIÓN ==================
+
+### Obtener todas las citas (SIN token)
+GET {{baseUrl}}/api/appointments/public
+
+### Obtener cita por ID (SIN token)
+GET {{baseUrl}}/api/appointments/public/1
+
+### Crear una nueva cita (SIN token)
+POST {{baseUrl}}/api/appointments/public
+Content-Type: application/json
+
+{
+  "pet_id": 3,
+  "veterinarian_id": 1,
+  "date": "2025-11-30T10:00:00.000Z",
+  "reason": "Consulta general",
+  "status": "programado"
+}
+
+### Actualizar una cita (SIN token)
+PATCH {{baseUrl}}/api/appointments/public/6
+Content-Type: application/json
+
+{
+  "pet_id": 3,
+  "veterinarian_id": 1,
+  "date": "2025-12-01T15:00:00.000Z",
+  "reason": "Actualización de motivo",
+  "status": "completado"
+}
+
+### Eliminar una cita físicamente (SIN token)
+DELETE {{baseUrl}}/api/appointments/public/3
+
+### Cancelar una cita (SIN token)
+PATCH {{baseUrl}}/api/appointments/public/7/cancel
+
+### ================== RUTAS CON AUTENTICACIÓN ==================
+
+### Obtener todas las citas (CON token)
+GET {{baseUrl}}/api/appointments
+Authorization: Bearer {{token}}
+
+### Obtener cita por ID (CON token)
+GET {{baseUrl}}/api/appointments/6
+Authorization: Bearer {{token}}
+
+### Crear una nueva cita (CON token)
+POST {{baseUrl}}/api/appointments
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "pet_id": 3,
+  "veterinarian_id": 4,
+  "date": "2025-12-05T09:30:00.000Z",
+  "reason": "Vacunación anual",
+  "status": "programado"
+}
+
+### Actualizar una cita (CON token)
+PATCH {{baseUrl}}/api/appointments/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "pet_id": 3,
+  "veterinarian_id": 4,
+  "date": "2025-12-06T11:00:00.000Z",
+  "reason": "Cambio de horario",
+  "status": "programado"
+}
+
+### Eliminar una cita físicamente (CON token)
+DELETE {{baseUrl}}/api/appointments/1
+Authorization: Bearer {{token}}
+
+### Cancelar una cita (CON token)
+PATCH {{baseUrl}}/api/appointments/7/cancel
+Authorization: Bearer {{token}}

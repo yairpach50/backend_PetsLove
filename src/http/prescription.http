@@ -1,0 +1,69 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTc2MDA2MDU1NywiZXhwIjoxNzYwMDYxMTU3fQ.l9kxHGraKffDkcOLHMmaVa12iOQKdrhZHrNnP6wb6dA
+@baseUrl = http://localhost:4000
+
+### ================== RUTAS SIN AUTENTICACIÓN ==================
+
+### Obtener todas las recetas (SIN token)
+GET {{baseUrl}}/api/prescriptions/public
+
+### Obtener receta por ID (SIN token)
+GET {{baseUrl}}/api/prescriptions/public/1
+
+### Crear una nueva receta (SIN token)
+POST {{baseUrl}}/api/prescriptions/public
+Content-Type: application/json
+
+{
+  "name": "Receta Analgésicos",
+  "notes": "Tomar después de comidas",
+  "appointment_id": 7
+}
+
+### Actualizar una receta (SIN token)
+PATCH {{baseUrl}}/api/prescriptions/public/1
+Content-Type: application/json
+
+{
+  "name": "Receta Analgésicos Actualizada",
+  "notes": "Tomar con agua",
+  "appointment_id": 1
+}
+
+### Eliminar una receta (SIN token)
+DELETE {{baseUrl}}/api/prescriptions/public/1
+
+### ================== RUTAS CON AUTENTICACIÓN ==================
+
+### Obtener todas las recetas (CON token)
+GET {{baseUrl}}/api/prescriptions
+Authorization: Bearer {{token}}
+
+### Obtener receta por ID (CON token)
+GET {{baseUrl}}/api/prescriptions/1
+Authorization: Bearer {{token}}
+
+### Crear una nueva receta (CON token)
+POST {{baseUrl}}/api/prescriptions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Receta Antibióticos",
+  "notes": "Tomar cada 8 horas",
+  "appointment_id": 2
+}
+
+### Actualizar una receta (CON token)
+PATCH {{baseUrl}}/api/prescriptions/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Receta Antibióticos Actualizada",
+  "notes": "Tomar cada 12 horas",
+  "appointment_id": 2
+}
+
+### Eliminar una receta (CON token)
+DELETE {{baseUrl}}/api/prescriptions/1
+Authorization: Bearer {{token}}

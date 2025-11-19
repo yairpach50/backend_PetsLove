@@ -1,0 +1,78 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTc2MDA2MDU1NywiZXhwIjoxNzYwMDYxMTU3fQ.l9kxHGraKffDkcOLHMmaVa12iOQKdrhZHrNnP6wb6dA
+@baseUrl = http://localhost:4000
+
+### ================== RUTAS SIN AUTENTICACIÓN ==================
+
+### Obtener todos los historiales médicos (SIN token)
+GET {{baseUrl}}/api/medical-histories/public
+
+### Obtener historial médico por ID (SIN token)
+GET {{baseUrl}}/api/medical-histories/public/1
+
+### Crear un nuevo historial médico (SIN token)
+POST {{baseUrl}}/api/medical-histories/public
+Content-Type: application/json
+
+{
+  "pet_id": 9,
+  "description": "Chequeo anual completo",
+  "date": "2025-10-25T10:00:00.000Z",
+  "status": "ACTIVE"
+}
+
+### Actualizar un historial médico (SIN token)
+PATCH {{baseUrl}}/api/medical-histories/public/1
+Content-Type: application/json
+
+{
+  "description": "Chequeo anual actualizado",
+  "date": "2025-10-25T15:00:00.000Z",
+  "status": "ACTIVE"
+}
+
+### Eliminar un historial médico físicamente (SIN token)
+DELETE {{baseUrl}}/api/medical-histories/public/1
+
+### Desactivar un historial médico (SIN token)
+PATCH {{baseUrl}}/api/medical-histories/public/2/deactivate
+
+### ================== RUTAS CON AUTENTICACIÓN ==================
+
+### Obtener todos los historiales médicos (CON token)
+GET {{baseUrl}}/api/medical-histories
+Authorization: Bearer {{token}}
+
+### Obtener historial médico por ID (CON token)
+GET {{baseUrl}}/api/medical-histories/1
+Authorization: Bearer {{token}}
+
+### Crear un nuevo historial médico (CON token)
+POST {{baseUrl}}/api/medical-histories
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "pet_id": 2,
+  "description": "Vacunación completa",
+  "date": "2025-10-26T09:30:00.000Z",
+  "status": "ACTIVE"
+}
+
+### Actualizar un historial médico (CON token)
+PATCH {{baseUrl}}/api/medical-histories/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "description": "Vacunación actualizada",
+  "date": "2025-10-26T10:30:00.000Z",
+  "status": "ACTIVE"
+}
+
+### Eliminar un historial médico físicamente (CON token)
+DELETE {{baseUrl}}/api/medical-histories/1
+Authorization: Bearer {{token}}
+
+### Desactivar un historial médico (CON token)
+PATCH {{baseUrl}}/api/medical-histories/1/deactivate
+Authorization: Bearer {{token}}

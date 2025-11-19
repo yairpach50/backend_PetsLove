@@ -1,0 +1,85 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTc2MDA2MDU1NywiZXhwIjoxNzYwMDYxMTU3fQ.l9kxHGraKffDkcOLHMmaVa12iOQKdrhZHrNnP6wb6dA
+@baseUrl = http://localhost:4000
+
+### ================== RUTAS SIN AUTENTICACIÓN ==================
+
+### Obtener todas las aplicaciones de vacuna (SIN token)
+GET {{baseUrl}}/api/vaccine-applications/public
+
+### Obtener aplicación por ID (SIN token)
+GET {{baseUrl}}/api/vaccine-applications/public/1
+
+### Crear una nueva aplicación de vacuna (SIN token)
+POST {{baseUrl}}/api/vaccine-applications/public
+Content-Type: application/json
+
+{
+  "pet_id": 9,
+  "vaccine_id": 1,
+  "appointment_id": 6,
+  "date": "2025-10-25T10:00:00.000Z",
+  "dose": "Primera dosis",
+  "status": "pendiente"
+}
+
+### Actualizar una aplicación de vacuna (SIN token)
+PATCH {{baseUrl}}/api/vaccine-applications/public/1
+Content-Type: application/json
+
+{
+  "pet_id": 1,
+  "vaccine_id": 2,
+  "date": "2025-10-30T10:00:00.000Z",
+  "dose": "Primera dosis actualizada",
+  "status": "pendiente"
+}
+
+### Eliminar una aplicación de vacuna (SIN token)
+DELETE {{baseUrl}}/api/vaccine-applications/public/1
+
+### Marcar como aplicada (SIN token)
+PATCH {{baseUrl}}/api/vaccine-applications/public/2/mark-as-applied
+
+### ================== RUTAS CON AUTENTICACIÓN ==================
+
+### Obtener todas las aplicaciones de vacuna (CON token)
+GET {{baseUrl}}/api/vaccine-applications
+Authorization: Bearer {{token}}
+
+### Obtener aplicación por ID (CON token)
+GET {{baseUrl}}/api/vaccine-applications/1
+Authorization: Bearer {{token}}
+
+### Crear una nueva aplicación de vacuna (CON token)
+POST {{baseUrl}}/api/vaccine-applications
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "pet_id": 3,
+  "vaccine_id": 1,
+  "date": "2025-11-01T10:00:00.000Z",
+  "dose": "Segunda dosis",
+  "status": "pendiente"
+}
+
+### Actualizar una aplicación de vacuna (CON token)
+PATCH {{baseUrl}}/api/vaccine-applications/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "pet_id": 3,
+  "vaccine_id": 4,
+  "date": "2025-11-05T10:00:00.000Z",
+  "dose": "Segunda dosis actualizada",
+  "status": "pendiente"
+}
+
+### Eliminar una aplicación de vacuna (CON token)
+DELETE {{baseUrl}}/api/vaccine-applications/1
+Authorization: Bearer {{token}}
+
+### Marcar como aplicada (CON token)
+PATCH {{baseUrl}}/api/vaccine-applications/1/mark-as-applied
+Authorization: Bearer {{token}}

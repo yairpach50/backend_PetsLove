@@ -1,0 +1,80 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTc2MDA2MDU1NywiZXhwIjoxNzYwMDYxMTU3fQ.l9kxHGraKffDkcOLHMmaVa12iOQKdrhZHrNnP6wb6dA
+@baseUrl = http://localhost:4000
+
+### ================== RUTAS SIN AUTENTICACIÓN ==================
+
+### Obtener todas las vacunas (SIN token)
+GET {{baseUrl}}/api/vaccines/public
+
+### Obtener vacuna por ID (SIN token)
+GET {{baseUrl}}/api/vaccines/public/1
+
+### Crear una nueva vacuna (SIN token)
+POST {{baseUrl}}/api/vaccines/public
+Content-Type: application/json
+
+{
+  "name": "Vacuna Antirrábica",
+  "description": "Vacuna para prevenir la rabia",
+  "manufacturer": "Pfizer",
+  "status": "ACTIVE"
+}
+
+### Actualizar una vacuna (SIN token)
+PATCH {{baseUrl}}/api/vaccines/public/1
+Content-Type: application/json
+
+{
+  "name": "Vacuna Antirrábica Actualizada",
+  "description": "Vacuna actualizada para prevención de rabia",
+  "manufacturer": "Moderna",
+  "status": "ACTIVE"
+}
+
+### Eliminar una vacuna físicamente (SIN token)
+DELETE {{baseUrl}}/api/vaccines/public/1
+
+### Desactivar una vacuna (SIN token)
+PATCH {{baseUrl}}/api/vaccines/public/2/deactivate
+
+### ================== RUTAS CON AUTENTICACIÓN ==================
+
+### Obtener todas las vacunas (CON token)
+GET {{baseUrl}}/api/vaccines
+Authorization: Bearer {{token}}
+
+### Obtener vacuna por ID (CON token)
+GET {{baseUrl}}/api/vaccines/1
+Authorization: Bearer {{token}}
+
+### Crear una nueva vacuna (CON token)
+POST {{baseUrl}}/api/vaccines
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Vacuna Triple Viral",
+  "description": "Vacuna contra sarampión, rubéola y paperas",
+  "manufacturer": "GSK",
+  "status": "ACTIVE"
+}
+
+### Actualizar una vacuna (CON token)
+PATCH {{baseUrl}}/api/vaccines/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Vacuna Triple Viral Actualizada",
+  "description": "Vacuna actualizada contra sarampión, rubéola y paperas",
+  "manufacturer": "GSK Updated",
+  "status": "ACTIVE"
+}
+
+### Eliminar una vacuna físicamente (CON token)
+DELETE {{baseUrl}}/api/vaccines/1
+Authorization: Bearer {{token}}
+
+### Desactivar una vacuna (CON token)
+PATCH {{baseUrl}}/api/vaccines/1/deactivate
+Authorization: Bearer {{token}}

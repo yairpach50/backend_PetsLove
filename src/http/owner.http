@@ -1,0 +1,80 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTc2MDA2MDU1NywiZXhwIjoxNzYwMDYxMTU3fQ.l9kxHGraKffDkcOLHMmaVa12iOQKdrhZHrNnP6wb6dA
+@baseUrl = http://localhost:4000
+
+### ================== RUTAS SIN AUTENTICACIÓN ==================
+
+### Obtener todos los propietarios (SIN token)
+GET {{baseUrl}}/api/owners/public
+
+### Obtener propietario por ID (SIN token)
+GET {{baseUrl}}/api/owners/public/1
+
+### Crear un nuevo propietario (SIN token)
+POST {{baseUrl}}/api/owners/public
+Content-Type: application/json
+
+{
+  "name": "Carlos Sánchez",
+  "phone": "3001234567",
+  "email": "carlos.sanchez@example.com",
+  "status": "ACTIVE"
+}
+
+### Actualizar un propietario (SIN token)
+PATCH {{baseUrl}}/api/owners/public/1
+Content-Type: application/json
+
+{
+  "name": "Carlos Sánchez Actualizado",
+  "phone": "3007654321",
+  "email": "carlos.updated@example.com",
+  "status": "ACTIVE"
+}
+
+### Eliminar un propietario físicamente (SIN token)
+DELETE {{baseUrl}}/api/owners/public/1
+
+### Desactivar un propietario (SIN token)
+PATCH {{baseUrl}}/api/owners/public/2/deactivate
+
+### ================== RUTAS CON AUTENTICACIÓN ==================
+
+### Obtener todos los propietarios (CON token)
+GET {{baseUrl}}/api/owners
+Authorization: Bearer {{token}}
+
+### Obtener propietario por ID (CON token)
+GET {{baseUrl}}/api/owners/1
+Authorization: Bearer {{token}}
+
+### Crear un nuevo propietario (CON token)
+POST {{baseUrl}}/api/owners
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Ana Gómez",
+  "phone": "3009876543",
+  "email": "ana.gomez@example.com",
+  "status": "ACTIVE"
+}
+
+### Actualizar un propietario (CON token)
+PATCH {{baseUrl}}/api/owners/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Ana Gómez Actualizada",
+  "phone": "3001239876",
+  "email": "ana.updated@example.com",
+  "status": "ACTIVE"
+}
+
+### Eliminar un propietario físicamente (CON token)
+DELETE {{baseUrl}}/api/owners/1
+Authorization: Bearer {{token}}
+
+### Desactivar un propietario (CON token)
+PATCH {{baseUrl}}/api/owners/1/deactivate
+Authorization: Bearer {{token}}

@@ -1,0 +1,84 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTc2MDA2MDU1NywiZXhwIjoxNzYwMDYxMTU3fQ.l9kxHGraKffDkcOLHMmaVa12iOQKdrhZHrNnP6wb6dA
+@baseUrl = http://localhost:4000
+
+### ================== RUTAS SIN AUTENTICACIÓN ==================
+
+### Obtener todos los pagos (SIN token)
+GET {{baseUrl}}/api/payments/public
+
+### Obtener pago por ID (SIN token)
+GET {{baseUrl}}/api/payments/public/1
+
+### Crear un nuevo pago (SIN token)
+POST {{baseUrl}}/api/payments/public
+Content-Type: application/json
+
+{
+  "appointment_id": 6,
+  "amount": 50000,
+  "method": "efectivo",
+  "date": "2025-10-25T12:00:00.000Z",
+  "status": "pendiente"
+}
+
+### Actualizar un pago (SIN token)
+PATCH {{baseUrl}}/api/payments/public/2
+Content-Type: application/json
+
+{
+  "appointment_id": 6,
+  "amount": 60000,
+  "method": "tarjeta",
+  "date": "2025-10-26T15:00:00.000Z",
+  "status": "pagado"
+}
+
+### Eliminar un pago físicamente (SIN token)
+DELETE {{baseUrl}}/api/payments/public/1
+
+### Cancelar un pago (SIN token)
+PATCH {{baseUrl}}/api/payments/public/2/cancel
+
+### ================== RUTAS CON AUTENTICACIÓN ==================
+
+### Obtener todos los pagos (CON token)
+GET {{baseUrl}}/api/payments
+Authorization: Bearer {{token}}
+
+### Obtener pago por ID (CON token)
+GET {{baseUrl}}/api/payments/1
+Authorization: Bearer {{token}}
+
+### Crear un nuevo pago (CON token)
+POST {{baseUrl}}/api/payments
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "appointment_id": 2,
+  "amount": 75000,
+  "method": "transferencia",
+  "date": "2025-10-25T14:30:00.000Z",
+  "status": "pendiente"
+}
+
+### Actualizar un pago (CON token)
+PATCH {{baseUrl}}/api/payments/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "appointment_id": 2,
+  "amount": 80000,
+  "method": "tarjeta",
+  "date": "2025-10-26T16:00:00.000Z",
+  "status": "pagado"
+}
+
+### Eliminar un pago físicamente (CON token)
+DELETE {{baseUrl}}/api/payments/1
+Authorization: Bearer {{token}}
+
+### Cancelar un pago (CON token)
+PATCH {{baseUrl}}/api/payments/1/cancel
+Authorization: Bearer {{token}}
