@@ -8,8 +8,6 @@ export class PrescriptionMedicine extends Model {
   public dosage?: string;
   public duration?: string;
   public instructions?: string;
-  public created_at!: Date;
-  public updated_at!: Date;
 }
 
 export interface PrescriptionMedicineI {
@@ -19,8 +17,6 @@ export interface PrescriptionMedicineI {
   dosage?: string;
   duration?: string;
   instructions?: string;
-  created_at?: Date;
-  updated_at?: Date;
 }
 
 PrescriptionMedicine.init(
@@ -34,8 +30,6 @@ PrescriptionMedicine.init(
   {
     tableName: "prescription_medicines",
     sequelize,
-    timestamps: true,
-    createdAt: "created_at",
-    updatedAt: "updated_at",
+    timestamps: false,
   }
 );

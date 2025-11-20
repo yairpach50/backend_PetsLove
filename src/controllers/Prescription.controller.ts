@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
+import { sequelize } from "../database/db_pets";
 import { Prescription, PrescriptionI } from '../models/Prescription';
 import { Appointment } from '../models/Appointment';
+import { PrescriptionMedicine } from '../models/PrescriptionMedicine';
+import { Medicine } from '../models/Medicine';
 
 export class PrescriptionController {
 
@@ -8,11 +11,23 @@ export class PrescriptionController {
   public async getAllPrescriptions(req: Request, res: Response): Promise<void> {
     try {
       const prescriptions: PrescriptionI[] = await Prescription.findAll({
-              include: [
-                { model: Appointment, as: 'cita', attributes: ['id', 'date', 'reason'] },
-              ]
-            });
-      res.status(200).json( prescriptions );
+        include: [
+          { 
+            model: Appointment, 
+            as: 'cita', 
+            attributes: ['id', 'date', 'reason'] 
+          },
+          {
+            model: Medicine,
+            as: 'medicamentos',
+            attributes: ['name', 'description'], 
+            through: {
+              attributes: ['dosage', 'duration', 'instructions'] 
+            }
+          }
+        ]
+      });
+      res.status(200).json(prescriptions);
     } catch (error) {
       res.status(500).json({ error: 'Error al obtener las prescripciones' });
     }
@@ -35,15 +50,35 @@ export class PrescriptionController {
 
   // Crear una nueva prescripción
   public async createPrescription(req: Request, res: Response): Promise<void> {
-    const { appointment_id, name, notes } = req.body;
+    const { appointment_id, name, notes, medicines } = req.body; 
+
+    const t = await sequelize.transaction();
+
     try {
-      const newPrescription: PrescriptionI = await Prescription.create({
+      const newPrescription = await Prescription.create({
         appointment_id,
         name,
         notes
-      });
-      res.status(201).json(newPrescription);
+      }, { transaction: t });
+
+      if (medicines && medicines.length > 0) {
+        const prescriptionMedicinesData = medicines.map((med: any) => ({
+          prescription_id: newPrescription.id,
+          medicine_id: med.medicine_id,
+          dosage: med.dosage,
+          duration: med.duration,
+          instructions: med.instructions
+        }));
+
+        await PrescriptionMedicine.bulkCreate(prescriptionMedicinesData, { transaction: t });
+      }
+
+      await t.commit();
+
+      res.status(201).json({ message: "Receta creada con éxito", id: newPrescription.id });
     } catch (error: any) {
+      await t.rollback();
+      console.error(error);
       res.status(400).json({ error: error.message });
     }
   }
@@ -51,16 +86,46 @@ export class PrescriptionController {
   // Actualizar una prescripción
   public async updatePrescription(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
-    const { appointment_id, name, notes } = req.body;
+    const { appointment_id, name, notes, medicines } = req.body; 
+
+    const t = await sequelize.transaction(); 
+
     try {
       const prescription = await Prescription.findByPk(id);
-      if (prescription) {
-        await prescription.update({ appointment_id, name, notes });
-        res.status(200).json(prescription);
-      } else {
+
+      if (!prescription) {
+        await t.rollback();
         res.status(404).json({ error: 'Prescripción no encontrada' });
+        return;
       }
+
+      await prescription.update({ appointment_id, name, notes }, { transaction: t });
+
+      if (medicines !== undefined) {
+        await PrescriptionMedicine.destroy({
+          where: { prescription_id: id },
+          transaction: t
+        });
+
+        if (medicines.length > 0) {
+          const prescriptionMedicinesData = medicines.map((med: any) => ({
+            prescription_id: id,
+            medicine_id: med.medicine_id,
+            dosage: med.dosage,
+            duration: med.duration,
+            instructions: med.instructions
+          }));
+
+          await PrescriptionMedicine.bulkCreate(prescriptionMedicinesData, { transaction: t });
+        }
+      }
+
+      await t.commit();
+      res.status(200).json({ message: 'Prescripción actualizada correctamente' });
+
     } catch (error: any) {
+      await t.rollback(); 
+      console.error(error);
       res.status(400).json({ error: error.message });
     }
   }

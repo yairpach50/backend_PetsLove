@@ -28,7 +28,15 @@ const dbConfigurations: Record<string, DatabaseConfig> = {
     password: process.env.POSTGRES_PASSWORD || "",
     database: process.env.POSTGRES_NAME || "test",
     port: parseInt(process.env.POSTGRES_PORT || "5432")
-  }
+  },
+  mssql: {
+    dialect: "mssql",
+    host: process.env.MSSQL_HOST || "localhost",
+    username: process.env.MSSQL_USER || "sa",
+    password: process.env.MSSQL_PASSWORD || "",
+    database: process.env.MSSQL_NAME || "test",
+    port: parseInt(process.env.MSSQL_PORT || "1433")
+  },
 };
 
 const selectedEngine = process.env.DB_ENGINE || "mysql";
